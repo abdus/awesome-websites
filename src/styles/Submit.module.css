@@ -1,0 +1,60 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0 0 0.1rem 0;
+  line-height: 1;
+  letter-spacing: 2px;
+}
+
+.desc {
+  color: gray;
+}
+
+.form {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+}
+
+.form button,
+.form input,
+.form textarea {
+  border: 1px solid lightgray;
+  border-radius: 0.3rem;
+  resize: none;
+  padding: 0.3rem;
+  font: inherit;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label small {
+  letter-spacing: 1px;
+  color: gray;
+}
+
+.form label input,
+.form label textarea {
+  display: block;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.form button[type='submit'] {
+  display: inline-block;
+  min-width: 10ch;
+}
+
+.form_group {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}

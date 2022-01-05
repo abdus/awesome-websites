@@ -1,75 +1,90 @@
-import Head from 'next/head';
-import Image from 'next/image';
-
+import React from 'react';
+import { fetch } from 'fetch-h2';
+import { GetServerSideProps } from 'next';
+import Favicon from '@/assets/favicon.jpg';
+import absoluteUrl from 'next-absolute-url';
 import styles from '@/styles/Home.module.css';
+import PlusCircle from '@/assets/plus-circle.svg';
 
-export default function Home() {
+export default function Home(props: { urls: null | any[] }) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>TypeScript starter for Next.js</title>
-        <meta
-          name="description"
-          content="TypeScript starter for Next.js that includes all you need to build amazing apps"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      <div className="max-width">
+        <div className={styles.nav}>
+          <div>
+            <h2 className={styles.title}>AWESOME WEBSITES</h2>
+            <div className={styles.desc}>
+              A list of amazing useful websites.
+            </div>
+          </div>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{` `}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <p className={styles.description}>This is not an official starter!</p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=typescript-nextjs-starter"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+          {/*eslint-disable-next-line*/}
+          <a href="/submit">
+            <PlusCircle />
           </a>
         </div>
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=typescript-nextjs-starter"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{` `}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+        <div className={styles.links}>
+          {props.urls?.map((item) => (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.card}
+              key={item._id}
+            >
+              <section>
+                {/*eslint-disable-next-line*/}
+                <img
+                  src={item.favicon}
+                  alt={item.title}
+                  className={styles.favicon_img}
+                  onError={(ev) => {
+                    ev.currentTarget.src = Favicon.src;
+                  }}
+                />
+              </section>
+              <section>
+                <div className={styles.header}>
+                  <div className={styles.link_title}>{item.title}</div>
+                  <small className={styles.link_url}>
+                    {new URL(item.url).host}
+                  </small>
+                </div>
+
+                <div className={styles.body}>
+                  <small style={{ color: `gray` }}>{item.description}</small>
+                </div>
+              </section>
+            </a>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { origin } = absoluteUrl(context.req, `localhost:3000`);
+
+  try {
+    const raw = await fetch(`${origin}/api/get-urls`);
+    const json = await raw.json();
+
+    if (!json.ok) {
+      throw Error(`something went wrong: ` + json.error);
+    }
+
+    return {
+      props: {
+        urls: json.data,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        urls: null,
+      },
+    };
+  }
+};
