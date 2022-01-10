@@ -18,7 +18,11 @@ function getUrlSchema() {
     description: { type: String },
   });
 
-  return mongoose.model(`Url`, UrlsCollection);
+  UrlsCollection.index({ url: 1, title: 1, description: 1 });
+
+  const model = mongoose.model(`Url`, UrlsCollection);
+  model.syncIndexes();
+  return model;
 }
 
 export const urlModel = mongoose.models.Url

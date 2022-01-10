@@ -7,6 +7,23 @@ import styles from '@/styles/Home.module.css';
 import PlusCircle from '@/assets/plus-circle.svg';
 
 export default function Home(props: { urls: null | any[] }) {
+  const [urls, setUrls] = React.useState(props.urls);
+  const [searchQuery, setSearchQuery] = React.useState(``);
+
+  React.useEffect(() => {
+    setUrls(props.urls);
+  }, [props.urls]);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const raw = await window.fetch(`/api/get-urls?q=${searchQuery}`);
+        const json = await raw.json();
+        setUrls(json.data);
+      } catch (err) {}
+    })();
+  }, [searchQuery]);
+
   return (
     <>
       <div className="max-width">
@@ -24,8 +41,19 @@ export default function Home(props: { urls: null | any[] }) {
           </a>
         </div>
 
+        <div className={styles.search_wrapper}>
+          <input
+            type="search"
+            value={searchQuery}
+            placeholder="search something..."
+            onChange={(ev) =>
+              setSearchQuery(ev.currentTarget.value?.toLowerCase())
+            }
+          />
+        </div>
+
         <div className={styles.links}>
-          {props.urls?.map((item) => (
+          {urls?.map((item) => (
             <a
               href={item.url}
               target="_blank"

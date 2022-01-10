@@ -1,5 +1,6 @@
 import { urlModel } from '@/config/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { buildSearchIndex, saveSearchIndex } from '@/config/search';
 
 type Data = {
   ok: boolean;
@@ -82,5 +83,8 @@ export default async function handler(
     return res
       .status(500)
       .json({ ok: false, data: null, error: `internal server error` });
+  } finally {
+    // update search index
+    buildSearchIndex().then(saveSearchIndex).catch(console.log);
   }
 }
