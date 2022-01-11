@@ -16,7 +16,7 @@
 
 .card {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   padding: 1rem 0.2rem;
   border-bottom: 1px solid gainsboro;
   max-width: 100%;
@@ -73,3 +73,16 @@
 .search_wrapper input:focus {
   outline: none;
 }
+
+/*.stats {*/
+  /*min-width: 100%;*/
+  /*margin-top: 0.5rem;*/
+/*}*/
+
+/*.stats button {*/
+  /*background-color: transparent;*/
+  /*border: none;*/
+  /*margin-right: 0.5rem;*/
+  /*color: lightgray;*/
+  /*cursor: pointer;*/
+/*}*/

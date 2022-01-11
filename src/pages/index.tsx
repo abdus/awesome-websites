@@ -5,7 +5,12 @@ import absoluteUrl from 'next-absolute-url';
 import styles from '@/styles/Home.module.css';
 import { NotFound } from '@/components/not-found';
 
-import PlusCircle from '@/assets/plus-circle.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlus,
+  faAngleUp,
+  faAngleDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 interface IDebounce {
   cb(): void;
@@ -62,7 +67,7 @@ export default function Home(props: { urls: null | any[] }) {
 
           {/*eslint-disable-next-line*/}
           <a href="/submit">
-            <PlusCircle />
+            <FontAwesomeIcon icon={faPlus} fontSize="1.3em" />
           </a>
         </div>
 

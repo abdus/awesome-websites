@@ -50,7 +50,19 @@
 
 .form button[type='submit'] {
   display: inline-block;
-  min-width: 10ch;
+  min-width: 7ch;
+  color: #0f6c10;
+  background-color: #cee6ca;
+  border: none;
+  margin-left: 2px;
+  cursor: pointer;
+}
+
+.form button[type='reset'] {
+  color: #6c0f0f;
+  background-color: #e6caca;
+  border: none;
+  cursor: pointer;
 }
 
 .form_group {
