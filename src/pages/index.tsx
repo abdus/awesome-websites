@@ -1,27 +1,52 @@
 import React from 'react';
 import { fetch } from 'fetch-h2';
 import { GetServerSideProps } from 'next';
-import Favicon from '@/assets/favicon.jpg';
 import absoluteUrl from 'next-absolute-url';
 import styles from '@/styles/Home.module.css';
+import { NotFound } from '@/components/not-found';
+
 import PlusCircle from '@/assets/plus-circle.svg';
+
+interface IDebounce {
+  cb(): void;
+  timeout?: number;
+}
+
+const debounce = (function _debounce() {
+  let timer: ReturnType<typeof setTimeout>;
+  return (opts: IDebounce) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      opts.cb.apply(null);
+    }, opts.timeout || 400);
+  };
+})();
 
 export default function Home(props: { urls: null | any[] }) {
   const [urls, setUrls] = React.useState(props.urls);
   const [searchQuery, setSearchQuery] = React.useState(``);
 
   React.useEffect(() => {
+    const searchParam = window.location.search;
+    const urlSearchQuery = new URLSearchParams(searchParam).get(`q`);
+
+    urlSearchQuery && setSearchQuery(urlSearchQuery);
+  }, []);
+
+  React.useEffect(() => {
     setUrls(props.urls);
   }, [props.urls]);
 
   React.useEffect(() => {
-    (async () => {
-      try {
-        const raw = await window.fetch(`/api/get-urls?q=${searchQuery}`);
-        const json = await raw.json();
-        setUrls(json.data);
-      } catch (err) {}
-    })();
+    debounce({
+      cb: async () => {
+        try {
+          const raw = await window.fetch(`/api/get-urls?q=${searchQuery}`);
+          const json = await raw.json();
+          setUrls(json.data);
+        } catch (err) {}
+      },
+    });
   }, [searchQuery]);
 
   return (
@@ -46,11 +71,11 @@ export default function Home(props: { urls: null | any[] }) {
             type="search"
             value={searchQuery}
             placeholder="search something..."
-            onChange={(ev) =>
-              setSearchQuery(ev.currentTarget.value?.toLowerCase())
-            }
+            onChange={(ev) => setSearchQuery(ev.currentTarget.value)}
           />
         </div>
+
+        {Array.isArray(urls) && urls.length === 0 ? <NotFound /> : null}
 
         <div className={styles.links}>
           {urls?.map((item) => (
@@ -68,7 +93,7 @@ export default function Home(props: { urls: null | any[] }) {
                   alt={item.title}
                   className={styles.favicon_img}
                   onError={(ev) => {
-                    ev.currentTarget.src = Favicon.src;
+                    ev.currentTarget.src = `/logo.svg`;
                   }}
                 />
               </section>
@@ -96,7 +121,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { origin } = absoluteUrl(context.req, `localhost:3000`);
 
   try {
-    const raw = await fetch(`${origin}/api/get-urls`);
+    const raw = await fetch(`${origin}/api/get-urls?q=${context.query.q}`);
     const json = await raw.json();
 
     if (!json.ok) {

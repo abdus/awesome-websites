@@ -10,30 +10,75 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit src/pages/api/save-url.ts
+edit src/pages/index.tsx
 argglobal
+balt src/pages/index.tsx
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=5
+setlocal fdl=10
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-15
+16
+normal! zo
+18
+normal! zo
+26
 normal! zo
 41
 normal! zo
-71
+42
 normal! zo
-let s:l = 86 - ((47 * winheight(0) + 26) / 52)
+43
+normal! zo
+53
+normal! zo
+54
+normal! zo
+55
+normal! zo
+56
+normal! zo
+57
+normal! zo
+70
+normal! zo
+81
+normal! zo
+82
+normal! zo
+83
+normal! zo
+89
+normal! zo
+90
+normal! zo
+92
+normal! zo
+101
+normal! zo
+102
+normal! zo
+121
+normal! zo
+124
+normal! zo
+132
+normal! zo
+137
+normal! zo
+138
+normal! zo
+let s:l = 23 - ((14 * winheight(0) + 26) / 52)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 86
-normal! 013|
+keepjumps 23
+normal! 05|
 tabnext 1
-badd +88 src/pages/api/save-url.ts
+badd +23 src/pages/index.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
