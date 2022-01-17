@@ -1,5 +1,6 @@
 import cheerio from 'cheerio';
 import { fetch } from 'fetch-h2';
+import { isUrlBanned } from '@/config/banned-hostnames';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
@@ -26,7 +27,16 @@ export default async function handler(
     if (!url) throw Error(`invalid url parameter`);
 
     // check if the URL is correctly formed
-    new URL(url);
+    const urlObj = new URL(url);
+    const hostName = urlObj.host;
+
+    if (isUrlBanned(hostName)) {
+      return res.json({
+        ok: false,
+        data: null,
+        error: `'${hostName}' is not allowed`,
+      });
+    }
 
     const raw = await fetch(url, { method: `GET`, redirect: `follow` });
     const html = await raw.text(false);

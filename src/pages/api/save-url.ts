@@ -1,5 +1,6 @@
 import { urlModel } from '@/config/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { isUrlBanned } from '@/config/banned-hostnames';
 import { buildSearchIndex, saveSearchIndex } from '@/config/search';
 
 type Data = {
@@ -46,7 +47,13 @@ export default async function handler(
   }
 
   try {
-    new URL(favicon);
+    if (isUrlBanned(new URL(url).host)) {
+      return res.json({
+        ok: false,
+        data: null,
+        error: `'${new URL(url).host}' is not allowed`,
+      });
+    }
   } catch (err) {
     return res
       .status(400)

@@ -128,7 +128,10 @@ export default function Submit() {
               });
 
               const resp = await raw.json();
-              !resp.ok && setErrorMsg(resp.error);
+              if (!resp.ok) {
+                setErrorMsg(resp.error);
+                return;
+              }
 
               setAwaitingSaveResp(false);
               window.location.href = `/`;
