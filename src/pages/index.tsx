@@ -5,12 +5,8 @@ import absoluteUrl from 'next-absolute-url';
 import styles from '@/styles/Home.module.css';
 import { NotFound } from '@/components/not-found';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPlus,
-  faAngleUp,
-  faAngleDown,
-} from '@fortawesome/free-solid-svg-icons';
 
 interface IDebounce {
   cb(): void;

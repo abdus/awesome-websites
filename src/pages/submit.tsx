@@ -76,13 +76,13 @@ export default function Submit() {
 
               if (json.ok) {
                 setURLInfo(json.data);
-                setLoadingUrlInfo(() => false);
               } else {
                 setErrorMsg(json.error);
               }
             } catch (err) {
-              setLoadingUrlInfo(() => false);
               setErrorMsg((err as Error).message);
+            } finally {
+              setLoadingUrlInfo(() => false);
             }
           }}
         >
