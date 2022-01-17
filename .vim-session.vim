@@ -10,47 +10,26 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit src/pages/submit.tsx
+edit src/config/db.ts
 argglobal
-balt src/pages/submit.tsx
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=9
+setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-18
+12
 normal! zo
-24
-normal! zo
-25
-normal! zo
-53
-normal! zo
-54
-normal! zo
-56
-normal! zo
-69
-normal! zo
-109
-normal! zo
-144
-normal! zo
-182
-normal! zo
-190
-normal! zo
-let s:l = 82 - ((33 * winheight(0) + 22) / 45)
+let s:l = 4 - ((3 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 82
-normal! 015|
+keepjumps 4
+normal! 016|
 tabnext 1
-badd +0 src/pages/submit.tsx
+badd +4 src/config/db.ts
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

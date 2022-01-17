@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 
 let mongoDBConn: mongoose.Connection | null = null;
-const connectionStr = `mongodb+srv://awesome-websites:DflGXoZqyDnCKhVV@cluster0.tptxt.mongodb.net/awesome-websites?retryWrites=true&w=majority`;
+const connectionStr = process.env.DATABASE_URI;
+
+if (typeof connectionStr !== `string`) {
+  throw new Error(`database uri: not a string`);
+  process.exit(1);
+}
 
 if (!mongoDBConn) {
   mongoose
