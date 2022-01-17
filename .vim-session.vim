@@ -10,7 +10,7 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit src/config/db.ts
+edit README.md
 argglobal
 setlocal fdm=indent
 setlocal fde=0
@@ -20,16 +20,14 @@ setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-12
-normal! zo
-let s:l = 4 - ((3 * winheight(0) + 22) / 45)
+let s:l = 3 - ((2 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
-normal! 016|
+keepjumps 3
+normal! 088|
 tabnext 1
-badd +4 src/config/db.ts
+badd +1 README.md
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
