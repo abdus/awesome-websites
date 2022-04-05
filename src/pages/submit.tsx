@@ -29,7 +29,7 @@ export default function Submit() {
         </div>
 
         {/*eslint-disable-next-line*/}
-        <a href="/">
+        <a href="/" style={{ marginLeft: `1rem` }}>
           <FontAwesomeIcon icon={faArrowLeftLong} fontSize="1.3em" />
         </a>
       </div>

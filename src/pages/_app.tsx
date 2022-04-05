@@ -7,7 +7,26 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <HtmlHead />
-      <Component {...pageProps} />
+
+      <div style={{ minHeight: `80vh` }}>
+        <Component {...pageProps} />
+      </div>
+
+      <footer
+        style={{
+          maxWidth: `1000px`,
+          margin: `2rem auto`,
+          padding: `0 1rem`,
+          color: `gray`,
+          fontSize: `0.8em`,
+        }}
+      >
+        &copy; 2020. A fun little project by{` `}
+        <a href="https://abdus.net" style={{ textDecoration: `underline` }}>
+          Abdus Azad
+        </a>
+        .
+      </footer>
     </>
   );
 }

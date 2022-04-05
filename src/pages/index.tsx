@@ -62,7 +62,7 @@ export default function Home(props: { urls: null | any[] }) {
           </div>
 
           {/*eslint-disable-next-line*/}
-          <a href="/submit">
+          <a href="/submit" style={{ marginLeft: `1rem` }}>
             <FontAwesomeIcon icon={faPlus} fontSize="1.3em" />
           </a>
         </div>
